@@ -1,19 +1,22 @@
 .text
 .globl start
 .code16
+
+load_msg:
+	.string "Load MOS ..."
+
 start:
 	jmp code
-msg:
-	.string "Hello fandunqiu..."
+
 code:
 	xor %ax, %ax
 	mov %ax, %ds
 	mov $0x03, %ah 
 	int $0x10
 	
-	mov $18, %cx
+	mov $12, %cx
 	mov $0x7, %bx
-	mov $msg, %bp
+	mov $load_msg, %bp
 	mov $0x1301, %ax
 	int $0x10
 1:  
