@@ -21,10 +21,10 @@ void usage(void)
 int main(int argc, char ** argv)
 {
 	int i,c,id;
-	char buf[512];
+	char buf[1024];
 
-	//if (argc != 3)
-	//	usage();
+	if (argc != 3)
+		usage();
 	for (i=0;i<sizeof(buf); i++){
 		buf[i]=0;
 	}
@@ -35,44 +35,48 @@ int main(int argc, char ** argv)
 		die("Unable to read header of 'boot'");
 	}
 	/*
-	if (((long *) buf)[0]!=0x04100301){
-		die("1:Non-Minix header of 'boot'");
-	}
-	if (((long *) buf)[1]!=MINIX_HEADER){
-		die("2:Non-Minix header of 'boot'");
-	}
-	if (((long *) buf)[3]!=0){
-		die("Illegal data segment in 'boot'");
-	}
-	if (((long *) buf)[4]!=0){
-		die("Illegal bss in 'boot'");
-	}
-	if (((long *) buf)[5] != 0){
-		die("Non-Minix header of 'boot'");
-	}
-	if (((long *) buf)[7] != 0){
-		die("Illegal symbol table in 'boot'");
-	}
-	*/
+	   if (((long *) buf)[0]!=0x04100301){
+	   die("1:Non-Minix header of 'boot'");
+	   }
+	   if (((long *) buf)[1]!=MINIX_HEADER){
+	   die("2:Non-Minix header of 'boot'");
+	   }
+	   if (((long *) buf)[3]!=0){
+	   die("Illegal data segment in 'boot'");
+	   }
+	   if (((long *) buf)[4]!=0){
+	   die("Illegal bss in 'boot'");
+	   }
+	   if (((long *) buf)[5] != 0){
+	   die("Non-Minix header of 'boot'");
+	   }
+	   if (((long *) buf)[7] != 0){
+	   die("Illegal symbol table in 'boot'");
+	   }
+	   */
 	i=read(id,buf,sizeof(buf));
+	fprintf(stderr,"Boot sector %d bytes.\n",i);
+	if (i>510){
+		die("Boot block may not exceed 510 bytes");
+	}
+	buf[510]=0x55;
+	buf[511]=0xAA;
 	i=write(1,buf,512);
-	if (i!=512)
+	if (i!=512){
 		die("Write call failed");
+	}
 	close (id);
-	
-	/*
-	if ((id=open(argv[2],O_RDONLY,0))<0)
+
+	if ((id=open(argv[2],O_RDONLY,0))<0){
 		die("Unable to open 'system'");
-	if (read(id,buf,GCC_HEADER) != GCC_HEADER)
-		die("Unable to read header of 'system'");
-	if (((long *) buf)[5] != 0)
-		die("Non-GCC header of 'system'");
-	for (i=0 ; (c=read(id,buf,sizeof buf))>0 ; i+=c )
-		if (write(1,buf,c)!=c)
+	}
+	for (i=0 ; (c=read(id,buf,sizeof buf))>0 ; i+=c ){
+		if (write(1,buf,c)!=c){
 			die("Write call failed");
+		}
+	}
 	close(id);
 	fprintf(stderr,"System %d bytes.\n",i);
-	*/
 	return(0);
 }
 
