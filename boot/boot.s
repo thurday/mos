@@ -89,12 +89,12 @@ empty_8042:
 gdt:
 	.word	0,0,0,0		; dummy
 
-	.word	0x07FF		; 4G
+	.word	0xFFFF		; 4G
 	.word	0x0000		; base address=0
 	.word	0x9A01		; code read/exec
 	.word	0x00C0		; granularity=4096, 386
 
-	.word	0x07FF		; 4G
+	.word	0xFFFF		; 4G
 	.word	0x0000		; base address=0
 	.word	0x9201		; data read/write
 	.word	0x00C0		; granularity=4096, 386
@@ -104,7 +104,7 @@ idt_48:
 	.word	0,0			; idt base=0L
 
 gdt_48:
-	.word	0x7ff		; gdt limit=2048, 256 GDT entries
+	.word	0xffff		; gdt limit=2048, 256 GDT entries
 	.long   0x7c00+gdt,0; gdt base = 0X9xxxx
 
 load_msg:
