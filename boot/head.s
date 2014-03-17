@@ -29,7 +29,7 @@ die:
 	jmp  die
 
 msg:
-	.string "MOS into PM ....\x0\x0\x0\x0"
+	.ascii "MOS in PM ...\x0\x0\x0\x0"
 
 
 	
