@@ -14,6 +14,7 @@ OBJECTS = main.o
 disk: mos.img
 
 mos.img: bootsect kernel fs.img
+	mkdir -p qemu
 	dd if=/dev/zero of=qemu/mos.img count=10000
 	dd if=bootsect of=qemu/mos.img conv=notrunc
 	dd if=kernel of=qemu/mos.img seek=1 conv=notrunc
