@@ -43,6 +43,7 @@ fs.img:
 	sync
 
 clean:
-	rm -rf *.d *.d *.o
-	rm -rf bootsect
+	rm -rf *.d *.d *.o *.out
+	rm -rf bootsect kernel
+	rm -rf qemu/mos.img
 	
