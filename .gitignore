@@ -1,0 +1,8 @@
+!.gitignore
+*.d
+*.o 
+*.out
+bootsect
+kernel
+qemu/*
+!qemu/
