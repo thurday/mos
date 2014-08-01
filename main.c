@@ -71,10 +71,14 @@ static void cgaputc(int c)
 
 int main(void)
 {
+
 	char* buf = "starting mos ...";
 	char* s = buf;
 	for(; *s; s++)
 	    cgaputc((*s) & 0xff);
+
+	while(1) ;
+
 	return 0;
 }
 
